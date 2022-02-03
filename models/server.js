@@ -38,6 +38,7 @@ class Server{
     routes(){
 
         this.app.use('/api/toppings',require('../routes/topping.routes'));  
+        this.app.use('/api/pizzas',require('../routes/pizza.routes'));  
         
     }
 
