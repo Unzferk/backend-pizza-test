@@ -2,23 +2,18 @@ const mongoose = require('mongoose');
 
 const dbConnection = async() => {
 
-    try {
+    mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
 
-        await mongoose.connect( process.env.MONGO_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useCreateIndex: true,
-            useFindAndModify: false
-        });
+    //Get the default connection
+    const db = mongoose.connection;
+
+    //catch error
+    db.on('error', console.error.bind(console, 'Cant connect to database:'));
+    //all fine
+    db.once("open", function () {
+        console.log("Database is online");
+    });
     
-        console.log('database online');
-
-    } catch (error) {
-        console.log(error);
-        throw new Error('Cant connect to database');
-    }
-
-
 }
 
 module.exports = {

@@ -1,44 +1,67 @@
+const  Topping  = require('../models/topping');
 
+const  toppingsGet = async (req, res) => {
 
-const  toppingsGet = (req, res) => {
-    res.json({
-        msg: "API GET - controller"
-    })
-}
-
-const toppingsPost =(req, res) => {
-
-    const body = req.body;
-
-    res.json({
-        msg: "API POST",
-        body
-    });
-}
-
-const toppingsPut = (req, res) => {
-
-    const id = req.params.id;
+    const toppings= await Topping.find({state:true});
     
-    res.json({
-        msg: "API PUT",
-        id
-    })
+    if(toppings){
+        res.status(200).json({toppings});
+    }else{
+        res.status(400).json({msg:"Cant find toppings"})
+    }
 }
 
-const toppingsDelete = (req, res) => {
+const toppingsPost =async (req, res) => {
 
-    const id = req.params.id;
+    const name = req.body.name.toUpperCase();
 
-    res.json({
-        msg: "API DELETE",
-        id
-    })
+    const toppingDB = await Topping.findOne({ name: name });
+
+    //exist?
+    if ( toppingDB ) {
+        return res.status(400).json({
+            msg: `Topping ${ toppingDB.name }, already exist`
+        });
+    }
+
+    // data
+    const data = {
+        name: name
+    }
+
+    const topping = new Topping( data );
+
+    // save DB
+    await topping.save();
+    res.status(201).json(topping);
+}
+
+const toppingsUpdate = async (req,res)=>{
+    const { id } = req.params;
+    const { state, ...data } = req.body;
+
+    data.name  = data.name.toUpperCase();
+
+    const topping = await Topping.findByIdAndUpdate(id, data, { new: true });
+
+    res.json( topping );
+}
+
+const toppingsDelete = async (req, res) => {
+
+    const { id } = req.params;
+    try{
+        const toppingDeleted = await Topping.findByIdAndUpdate( id, { state: false });
+        res.status(200).json( toppingDeleted );
+    }catch{
+        res.status(400).json( {msg:"Cant delete that topping"} );
+    }
+    
 }
 
 module.exports = {
     toppingsGet,
     toppingsPost,
-    toppingsPut,
+    toppingsUpdate,
     toppingsDelete
 }

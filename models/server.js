@@ -37,11 +37,7 @@ class Server{
     
     routes(){
 
-<<<<<<< HEAD
-        //this.app.use('/api/toppings',require('../routes/topping.routes'));
-=======
-        this.app.use('/api/toppings',require('../routes/topping.routes'));
->>>>>>> ingredients-feature
+        this.app.use('/api/toppings',require('../routes/topping.routes'));  
         
     }
 
