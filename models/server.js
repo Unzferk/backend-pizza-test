@@ -1,5 +1,6 @@
 
 const express = require('express');
+const { dbConnection } = require('../database/config');
 //const cors = require('cors');
 
 class Server{
@@ -8,12 +9,19 @@ class Server{
         this.app= express();
         this.port= process.env.PORT;
 
+        //database
+        this.initDB();
+
         //Middlewares
         this.middlewares();
 
         //Routes
         this.routes();
 
+    }
+
+    async initDB() {
+        await dbConnection();
     }
     
     middlewares(){
@@ -29,7 +37,7 @@ class Server{
     
     routes(){
 
-        //this.app.use('/api/users',require('../routes/toppings.routes'));
+        //this.app.use('/api/toppings',require('../routes/topping.routes'));
         
     }
 
