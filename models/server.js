@@ -29,7 +29,7 @@ class Server{
     
     routes(){
 
-        //this.app.use('/api/users',require('../routes/toppings.routes'));
+        this.app.use('/api/toppings',require('../routes/topping.routes'));
         
     }
 
