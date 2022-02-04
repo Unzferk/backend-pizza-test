@@ -1,0 +1,125 @@
+{
+	"info": {
+		"_postman_id": "bf5f2bca-eff7-45f3-8e1e-b55414fba683",
+		"name": "pizzas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET PIZZAS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/pizzas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"pizzas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST PIZZA",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"pizza15\",\r\n    \"toppings\" : [{\"_id\":\"61fc2cfc86e8342eb35f7428\"},{\"_id\":\"61fc50b0f686e2ab06608cfc\"}]\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/pizzas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"pizzas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE PIZZA",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/pizzas/61fc41c054c67ae4031ce71e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"pizzas",
+						"61fc41c054c67ae4031ce71e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT TOPPING IN PIZZA",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/pizzas/toppings/61fc41c554c67ae4031ce721/61fc50b0f686e2ab06608cfc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"pizzas",
+						"toppings",
+						"61fc41c554c67ae4031ce721",
+						"61fc50b0f686e2ab06608cfc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE TOPPING IN PIZZA",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/pizzas/toppings/61fc41c554c67ae4031ce721/61fc50b0f686e2ab06608cfc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"pizzas",
+						"toppings",
+						"61fc41c554c67ae4031ce721",
+						"61fc50b0f686e2ab06608cfc"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
