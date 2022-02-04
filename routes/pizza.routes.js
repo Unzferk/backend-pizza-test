@@ -2,8 +2,8 @@ const {Router} = require('express');
 const { check } = require('express-validator');
 const {validateFields} = require('../middlewares/validate-fields');
 
-const { pizzasGet, pizzaPost, pizzaUpdate, pizzaDelete, pizzaGet } = require('../controllers/pizza.controller');
-const { pizzaExist } = require('../middlewares/db-validator');
+const { pizzasGet, pizzaPost, pizzaUpdate, pizzaDelete, pizzaGet, pizzaGetToppings, pizzaPutToppings, pizzaDeleteToppings } = require('../controllers/pizza.controller');
+const { pizzaExist, toppingExist } = require('../middlewares/db-validator');
 
 const router = Router();
 
@@ -17,6 +17,13 @@ router.get('/:id',
     check('id').custom( pizzaExist ),
     validateFields
 ], pizzaGet);
+
+router.get('/toppings/:id',
+[
+    check('id', 'Isn`t a MongoID').isMongoId(),
+    check('id').custom( pizzaExist ),
+    validateFields
+], pizzaGetToppings);
 
 router.post('/',
 [
@@ -32,6 +39,14 @@ router.put('/:id',[
     validateFields
 ],pizzaUpdate );
 
+router.put('/toppings/:id/:idtopping',[
+    check('id', 'Isnt a MongoID').isMongoId(),
+    check('idtopping', 'Isnt a MongoID').isMongoId(),
+    check('id').custom( pizzaExist ),
+    check('idtopping').custom( toppingExist ),
+    validateFields
+],pizzaPutToppings);
+
 router.delete('/:id',
 [
     check('id', 'Isn`t a MongoID').isMongoId(),
@@ -40,5 +55,12 @@ router.delete('/:id',
 
 ], pizzaDelete);
 
+router.delete('/toppings/:id/:idtopping',[
+    check('id', 'Isnt a MongoID').isMongoId(),
+    check('idtopping', 'Isnt a MongoID').isMongoId(),
+    check('id').custom( pizzaExist ),
+    check('idtopping').custom( toppingExist ),
+    validateFields
+],pizzaDeleteToppings);
 
 module.exports = router;

@@ -1,4 +1,6 @@
+const e = require('express');
 const  Pizza  = require('../models/pizza');
+const Topping = require('../models/topping');
 
 const  pizzaGet = async (req, res) => {
     const {id} = req.params;
@@ -19,6 +21,16 @@ const  pizzasGet = async (req, res) => {
     }
 }
 
+const pizzaGetToppings = async(req,res) =>{
+    const {id} = req.params;
+    const toppings= await Pizza.findOne({_id: id,state:true})
+    .populate('toppings');  
+    if(toppings){ 
+        res.status(200).json({toppings: toppings.toppings});
+    }else{
+        res.status(400).json({msg:"Cant find toppings"})
+    }
+}
 
 const pizzaPost =async (req, res) => {
 
@@ -44,6 +56,16 @@ const pizzaPost =async (req, res) => {
     res.status(201).json(pizza);
 }
 
+const pizzaPutToppings = async (req,res)=>{
+    const {id,idtopping} = req.params;
+    const updateToppings = await Pizza.findByIdAndUpdate(id,
+        {
+            $push: {toppings : idtopping}
+        },{new: true, useFindAndModify:false},
+    );
+    res.json(updateToppings);
+}
+
 const pizzaUpdate = async (req,res)=>{
     res.json({msg:"nothing"});
 }
@@ -60,10 +82,23 @@ const pizzaDelete = async (req, res) => {
     
 }
 
+const pizzaDeleteToppings = async (req,res)=>{
+    const {id,idtopping} = req.params;
+    const updateToppings = await Pizza.findByIdAndUpdate(id,
+        {
+            $pull: {toppings : idtopping}
+        },{new: true, useFindAndModify:false},
+    );
+    res.json(updateToppings);
+}
+
 module.exports = {
     pizzaGet,
+    pizzaGetToppings,
     pizzasGet,
     pizzaPost,
+    pizzaPutToppings,
     pizzaUpdate,
-    pizzaDelete
+    pizzaDelete,
+    pizzaDeleteToppings
 }
