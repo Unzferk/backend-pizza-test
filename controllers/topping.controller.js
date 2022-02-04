@@ -5,9 +5,9 @@ const  toppingsGet = async (req, res) => {
     const toppings= await Topping.find({state:true});
     
     if(toppings){
-        res.status(200).json({toppings});
+        res.status(200).json({data: toppings});
     }else{
-        res.status(400).json({msg:"Cant find toppings"})
+        res.status(400).json({data:"Cant find toppings"})
     }
 }
 

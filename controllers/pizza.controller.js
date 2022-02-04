@@ -4,7 +4,8 @@ const Topping = require('../models/topping');
 
 const  pizzaGet = async (req, res) => {
     const {id} = req.params;
-    const pizzas= await Pizza.findOne({_id: id,state:true});  
+    const pizzas= await Pizza.findOne({_id: id,state:true})
+    .populate('toppings');  
     if(pizzas){
         res.status(200).json({pizzas: pizzas});
     }else{
@@ -13,7 +14,8 @@ const  pizzaGet = async (req, res) => {
 }
 
 const  pizzasGet = async (req, res) => {
-    const pizzas= await Pizza.find({state:true});  
+    const pizzas= await Pizza.find({state:true})
+    .populate('toppings');  
     if(pizzas){
         res.status(200).json({pizzas: pizzas});
     }else{
